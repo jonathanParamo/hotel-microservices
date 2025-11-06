@@ -1,0 +1,22 @@
+# Node.js
+node_modules/
+npm-debug.log
+.env
+
+# Docker
+*.log
+*.pid
+*.seed
+*.tar
+*.gz
+*.sqlite
+docker-compose.override.yml
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

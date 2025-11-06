@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend 2 | Hotel App</title>
+    <style>
+      :root {
+        --bg-color: #0d1117;
+        --card-bg: #f5f5f530;
+        --primary: #1f6feb;
+        --text-color: #e6edf3;
+        --accent: #58a6ff;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: "Segoe UI", Roboto, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      h1 {
+        color: var(--accent);
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: #f5f5f5;
+        margin-bottom: 2rem;
+      }
+
+      .card {
+        background-color: var(--card-bg);
+        padding: 2rem 3rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 20px rgba(56, 139, 253, 0.15);
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+      }
+
+      button {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin: 0.5rem;
+      }
+
+      button:hover {
+        background-color: #388bfd;
+      }
+
+      footer {
+        position: absolute;
+        bottom: 1rem;
+        color: #8b949e;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Frontend 2</h1>
+      <p>Bienvenido al servidor 2</p>
+      <button onclick="login()">Probar Login</button>
+      <button onclick="enConstruccion()">Sección en construcción</button>
+    </div>
+
+    <footer>Hotel Microservices © 2025</footer>
+
+    <script>
+      async function login() {
+        try {
+          const res = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "test@mail.com",
+              password: "1234",
+            }),
+          });
+          const data = await res.json();
+          alert(JSON.stringify(data, null, 2));
+        } catch (err) {
+          alert("❌ Error al conectar con el backend");
+        }
+      }
+
+      function enConstruccion() {
+        alert("Esta sección aún está en construcción, vuelve pronto");
+      }
+    </script>
+  </body>
+</html>

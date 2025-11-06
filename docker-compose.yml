@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hotel_app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  backend:
+    build: ./backend
+    container_name: hotel_backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: mysql://root:root@db:3306/hotel_app
+      JWT_SECRET: secret-key
+      NODE_ENV: development
+    depends_on:
+      - db
+    command: >
+      sh -c "npx prisma generate && npx prisma migrate deploy && npm run start:dev"
+    networks:
+      - app_network
+
+  frontend1:
+    image: nginx:alpine
+    container_name: frontend1
+    volumes:
+      - ./frontend1:/usr/share/nginx/html
+    networks:
+      - app_network
+
+  frontend2:
+    image: nginx:alpine
+    container_name: frontend2
+    volumes:
+      - ./frontend2:/usr/share/nginx/html
+    networks:
+      - app_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_main
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+      - frontend1
+      - frontend2
+    networks:
+      - app_network
+
+volumes:
+  mysql_data:
+
+networks:
+  app_network:
+    driver: bridge

@@ -1,0 +1,9 @@
+node_modules
+.git
+.aws
+*.zip
+*.log
+*.pdf
+*.png
+*.jpg
+*.mp4
